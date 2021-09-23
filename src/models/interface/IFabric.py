@@ -1,8 +1,6 @@
 from abc import ABC
 
-from abc import abstractmethod
-
-from src.interface import IModel
+from .IModel import IModel
 
 
 class AbstractFactory(ABC):

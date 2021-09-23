@@ -1,5 +1,3 @@
-from src.interface.IFabric import AbstractFactory
-from src.interface.IModel import IModel
 from src.text_editors.interface import ITextEditor
 from src.text_editors.interface.ITextEditorFactory import TextEditorAbstractFactory
 
@@ -20,7 +18,7 @@ class TextEditorFactory(TextEditorAbstractFactory):
         except KeyError:
             raise TypeError(f"Factory with type '{name}' not found.") from None
         else:
-            return model_impl()
+            return model_impl
 
 
     '''def create_text_editor(self):

@@ -4,7 +4,10 @@ from typing import Any
 
 from ..interface.ITextEditor import ITextEditor
 from ..utils import stemming_text
-from ...interface.IModel import IModel
+
+__all__ = [
+    "StemmingImpl",
+]
 
 
 class StemmingImpl(ITextEditor):

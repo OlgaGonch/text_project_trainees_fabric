@@ -1,5 +1,5 @@
-from src.interface.IFabric import AbstractFactory
-from src.interface.IModel import IModel
+from ..interface.IFabric import AbstractFactory
+from ..interface.IModel import IModel
 
 
 class ModelFactory(AbstractFactory):

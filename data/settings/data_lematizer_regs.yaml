@@ -1,0 +1,12 @@
+key_words:
+- alternatives
+- transcript
+preprocessing: preprocessing_text
+text_editor: lematizer
+classification_model: BigARTMRegs
+settings:
+  count_of_terms: 10
+  data_folder_path: '/tmp/text_ready.txt'
+  data_batches_path: '/batches/'
+  batch_size: 100
+  num_collection_passes: 10

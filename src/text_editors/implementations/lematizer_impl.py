@@ -3,8 +3,11 @@ from pandas import DataFrame
 from typing import Any
 import os
 from ..interface.ITextEditor import ITextEditor
-from ...interface.IModel import IModel
 from src.text_editors.utils import lemmatize_text
+
+__all__ = [
+    "LemmatizerImpl",
+]
 
 
 class LemmatizerImpl(ITextEditor):
