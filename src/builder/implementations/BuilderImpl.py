@@ -5,6 +5,7 @@ from typing import List
 from pandas import DataFrame
 
 from src.builder.interface.IBuilder import IBuilder
+from ...text_editors.interface.ITextEditor import ITextEditor
 
 __all__ = [
     'BuilderImpl'
@@ -21,17 +22,16 @@ class BuilderImpl(IBuilder):
     )
 
     def __init__(self):
-        self._commands: List[ICommand] = []
+        self._commands: List[ITextEditor] = []
 
-    def register(self, command: ICommand) -> None:
+    def register(self, command: ITextEditor) -> None:
         """Дополняет список comands к выполнению"""
         self._commands.append(command)
         print('ExecutorImp ', self._commands)
         return
 
-    def execute(self, data: DataFrame) -> DataFrame:
+    def execute(self, full_path: str) -> str:
         """Выполнение команд по списку"""
-        _data = deepcopy(data)
         for command in self._commands:
-            _data = command.execute(data=_data)
-        return _data
+            res_path: str = command.execute(full_path=full_path)
+        return res_path

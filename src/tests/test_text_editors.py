@@ -62,7 +62,7 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
         ]
         # подготовка фабрики для выбора text_editor
         factory_preprocessing = TextEditorFactory()
-        factory_preprocessing.add_text_editor('preprocessing', PreprocessingImpl())  # класс, который переводит текст из формата json в txt - не могу найти его в проекте
+        # factory_preprocessing.add_text_editor('preprocessing', PreprocessingImpl())  # класс, который переводит текст из формата json в txt - не могу найти его в проекте
         factory_preprocessing.add_text_editor('lematizer', LemmatizerImpl())
         factory_preprocessing.add_text_editor('stemming', StemmingImpl())
 
@@ -85,34 +85,31 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
 
         for data_item in data_items:
             # вводим строитель
-            text_convertor = BuilderImpl()
+            text_convertor = BuilderImpl()  # строитель предобработки текста
 
             data_request = _get_request_for_test(
                 data_item)
             with open('{0}'.format(data_request.file_path), 'r') as stream:
                 settings_dict = _get_settings_for_test(yaml.safe_load(stream))
-            print(type(settings_dict.settings), settings_dict.settings)
 
             print('register')  # регистрируем команды в список Builder
-            text_convertor.register(factory_preprocessing.get_instance(settings_dict.preprocessing))
+#            text_convertor.register(factory_preprocessing.get_instance(settings_dict.preprocessing))
             text_convertor.register(factory_preprocessing.get_instance(settings_dict.text_editor))
 
-            print('execute ')
-            df_text = pd.read_csv('{}/sentiment_analysis_train_numbers.csv'.format(data_path))
-            full_text = pd.read_csv('{}/full_text.csv'.format(data_path))
-            df_text = df_text[['number', 'call_text', 'estimate']]
+            print('execute ')  # выполнение команд из списка
+            res_path = text_convertor.execute(full_path='{0}{1}'.format(data_path, settings_dict.settings.get('data_folder_path')))
+            print(res_path)
 
-            df_text_transformed = text_convertor.execute(df_text)
-            full_text_transformed = text_convertor.execute(full_text)
+            # выбор модели BigARTM и передача в нее настроек
+            BigARTMmodel = model_factory.get_instance(name=settings_dict.classification_model,
+                                                      data_folder_path=res_path,
+                                                      data_batches_path='{0}{1}'.format(data_path,settings_dict.settings.get('data_batches_path')),
+                                                      batch_size=settings_dict.settings.get('batch_size'),
+                                                      num_collection_passes=settings_dict.settings.get('num_collection_passes'),
+                                                      count_of_terms=settings_dict.settings.get('count_of_terms'))
+            model_artm_fitted = BigARTMmodel.train_model()
+            print(model_artm_fitted)
 
-            SklearnModelsent = SklearnModelImpl()
-            train_text, train_labels, test_text, test_labels = SklearnModelsent.split_into_training_and_test(
-                0.1,
-                df_text_transformed)
 
-            preprocessing_product = factory_preprocessing.get_instance(settings_dict.text_editor)
-            print(preprocessing_product)
-            texts_df = preprocessing_product.execute(full_path='{0}{1}'.format(data_path,
-                                                                               settings_dict.settings.get('data_folder_path')))
         result = True
         self.assertTrue(result, 'good')

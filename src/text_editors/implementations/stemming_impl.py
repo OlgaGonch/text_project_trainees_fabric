@@ -16,7 +16,7 @@ class StemmingImpl(ITextEditor):
 
     def execute(self,
                 full_path: str
-                ) -> None:
+                ) -> str:
 
         with open(full_path) as f:
             lines = f.readlines()

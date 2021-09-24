@@ -5,6 +5,6 @@ preprocessing: preprocessing_text
 text_editor: lematizer
 classification_model: BigARTMsimple
 settings:
-  data_folder_path: '/tmp/text_ready.txt'
+  data_folder_path: '/text_small_100.txt'
   data_batches_path: '/batches/'
   batch_size: 100

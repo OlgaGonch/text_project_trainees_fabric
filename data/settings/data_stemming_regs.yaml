@@ -6,7 +6,7 @@ text_editor: stemming
 classification_model: BigARTMRegs
 settings:
   count_of_terms: 10
-  data_folder_path: '/tmp/text_ready.txt'
+  data_folder_path: '/text_small_100.txt'
   data_batches_path: '/batches/'
   batch_size: 100
   num_collection_passes: 10

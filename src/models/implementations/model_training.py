@@ -1,7 +1,7 @@
 import artm
 
 from typing import Any
-from ...interface.IModel import IModel
+from ..interface.IModel import IModel
 
 
 class ModelTrainer(IModel):
