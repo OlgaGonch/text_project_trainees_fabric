@@ -3,6 +3,7 @@ import os
 import re
 import string
 from typing import Any
+
 from src.text_editors.interface.ITextEditor import ITextEditor
 
 
@@ -48,7 +49,3 @@ class PreprocessingJSONImpl(ITextEditor):
                     file_to_write.write(str(string_number) + ' |text ' + string_a + ',' + '\n')
 
                 string_number += 1
-
-
-if __name__ == "__main__":
-    PreprocessingJSONImpl().execute("../../text_editors/local_data/texts.txt")
