@@ -7,12 +7,12 @@ from typing import Mapping
 from unittest import TestCase
 
 from src.builder.implementations.BuilderImpl import BuilderImpl
-from src.models.implementations.model_factory import ModelFactory
-from src.models.implementations.model_training import ModelTrainer
-from src.text_editors.interface.ITextEditorFactory import TextEditorAbstractFactory
-from src.text_editors.implementations.text_editor_factory import TextEditorFactory
-from src.text_editors.implementations.lematizer_impl import LemmatizerImpl
-from src.text_editors.implementations.stemming_impl import StemmingImpl
+from src.models.implementations.ModelFactory import ModelFactory
+from src.models.implementations.ModelTraining import ModelTrainer
+from src.text_editors.implementations.PreprocessingJsonImpl import PreprocessingJSONImpl
+from src.text_editors.implementations.TextEditorFactory import TextEditorFactory
+from src.text_editors.implementations.LemmatizerImpl import LemmatizerImpl
+from src.text_editors.implementations.StemmingImpl import StemmingImpl
 from src.models.interface.IModel import IModel
 
 
@@ -62,7 +62,7 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
         ]
         # подготовка фабрики для выбора text_editor
         factory_preprocessing = TextEditorFactory()
-        # factory_preprocessing.add_text_editor('preprocessing', PreprocessingImpl())  # класс, который переводит текст из формата json в txt - не могу найти его в проекте
+        factory_preprocessing.add_text_editor('preprocessing', PreprocessingJSONImpl())
         factory_preprocessing.add_text_editor('lematizer', LemmatizerImpl())
         factory_preprocessing.add_text_editor('stemming', StemmingImpl())
 
@@ -93,7 +93,7 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
                 settings_dict = _get_settings_for_test(yaml.safe_load(stream))
 
             print('register')  # регистрируем команды в список Builder
-#            text_convertor.register(factory_preprocessing.get_instance(settings_dict.preprocessing))
+            text_convertor.register(factory_preprocessing.get_instance(settings_dict.preprocessing))
             text_convertor.register(factory_preprocessing.get_instance(settings_dict.text_editor))
 
             print('execute ')  # выполнение команд из списка

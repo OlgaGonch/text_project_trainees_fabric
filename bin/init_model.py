@@ -1,7 +1,7 @@
 import os
 
-from src.models.implementations.model_factory import ModelFactory
-from src.models.implementations.model_training import ModelTrainer
+from src.models.implementations.ModelFactory import ModelFactory
+from src.models.implementations.ModelTraining import ModelTrainer
 
 if __name__ == "__main__":
     data_path = os.path.abspath('../data/'+'/')
