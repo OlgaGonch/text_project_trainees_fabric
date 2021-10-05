@@ -49,3 +49,5 @@ class PreprocessingJSONImpl(ITextEditor):
                     file_to_write.write(str(string_number) + ' |text ' + string_a + ',' + '\n')
 
                 string_number += 1
+        print('{0}batch_of_ready_text.txt'.format(path_to_data))
+        return '{0}batch_of_ready_text.txt'.format(path_to_data)

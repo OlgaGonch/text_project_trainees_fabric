@@ -27,11 +27,10 @@ class BuilderImpl(IBuilder):
     def register(self, command: ITextEditor) -> None:
         """Дополняет список comands к выполнению"""
         self._commands.append(command)
-        print('ExecutorImp ', self._commands)
         return
 
     def execute(self, full_path: str) -> str:
         """Выполнение команд по списку"""
         for command in self._commands:
-            res_path: str = command.execute(full_path=full_path)
-        return res_path
+            full_path: str = command.execute(full_path=full_path)
+        return full_path

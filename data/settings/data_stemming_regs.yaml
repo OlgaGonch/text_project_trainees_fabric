@@ -1,7 +1,7 @@
 key_words:
 - alternatives
 - transcript
-preprocessing: preprocessing_text
+preprocessing: preprocessing
 text_editor: stemming
 classification_model: BigARTMRegs
 settings:

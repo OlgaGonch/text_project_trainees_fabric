@@ -26,7 +26,7 @@ class StemmingImpl(ITextEditor):
 
         i = 0
         for line in lines:
-            new_line = stemming_text(lines[8:])
+            new_line = stemming_text(line[8:])
             file.write((str(i) + ' |text ' + new_line + '\n').encode())
             i += 1
 

@@ -48,18 +48,7 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
 
     def test_prepearing_init_data(self):
         # путь к данным
-        data_path = os.path.abspath('../data/' + '/', )  # прописать путь к данным
-        # файлы settings
-        data_items = [
-            {'file_path': '{0}/settings/data_lematizer_regs.yaml'.format(data_path)
-             },
-            {'file_path': '{0}/settings/data_lematizer_simple.yaml'.format(data_path)
-             },
-            {'file_path': '{0}/settings/data_stemming_regs.yaml'.format(data_path)
-             },
-            {'file_path': '{0}/settings/data_stemming_simple.yaml'.format(data_path)
-             }
-        ]
+        data_path = os.path.abspath('./../../data/', )  # прописать путь к данным
         # подготовка фабрики для выбора text_editor
         factory_preprocessing = TextEditorFactory()
         factory_preprocessing.add_text_editor('preprocessing', PreprocessingJSONImpl())
@@ -71,7 +60,6 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
         model_factory.add_model('BigARTMSimple', ModelTrainer)
         model_factory.add_model('BigARTMRegs', ModelTrainer)
 
-        data_path = os.path.abspath('../data/' + '/', )  # прописать путь к данным
         data_items = [
             {'file_path': '{0}/settings/data_lematizer_regs.yaml'.format(data_path)
              },
@@ -92,13 +80,15 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
             with open('{0}'.format(data_request.file_path), 'r') as stream:
                 settings_dict = _get_settings_for_test(yaml.safe_load(stream))
 
-            print('register')  # регистрируем команды в список Builder
+            # регистрируем команды в список Builder
             text_convertor.register(factory_preprocessing.get_instance(settings_dict.preprocessing))
             text_convertor.register(factory_preprocessing.get_instance(settings_dict.text_editor))
 
-            print('execute ')  # выполнение команд из списка
+            # выполнение команд из списка
+            print('Последовательность файлов')
+            print('{0}{1}'.format(data_path, settings_dict.settings.get('data_folder_path')))
             res_path = text_convertor.execute(full_path='{0}{1}'.format(data_path, settings_dict.settings.get('data_folder_path')))
-            print(res_path)
+            print(res_path) # печатает пути к файлам, которые возвращает executor
 
             # выбор модели BigARTM и передача в нее настроек
             BigARTMmodel = model_factory.get_instance(name=settings_dict.classification_model,
@@ -107,6 +97,7 @@ class TestDataPreparation(TestCase):  # подготовка данных из �
                                                       batch_size=settings_dict.settings.get('batch_size'),
                                                       num_collection_passes=settings_dict.settings.get('num_collection_passes'),
                                                       count_of_terms=settings_dict.settings.get('count_of_terms'))
+            # тренировка модели
             model_artm_fitted = BigARTMmodel.train_model()
             print(model_artm_fitted)
 

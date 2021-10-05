@@ -8,7 +8,7 @@ import string
 def small_sample(
         path_to_initial_data: str,  # путь к исходному файлу
         path_to_data: str,  # файл для записи
-) -> None:
+) -> str:
     if not os.path.exists(os.path.dirname(path_to_data)):  # проверяем наличие папки для записи файлов
         print('Папки нет')
         os.mkdir(os.path.dirname(path_to_data))
@@ -17,6 +17,7 @@ def small_sample(
         for i in range(100):
             x = txt_file.readline()
             file_to_write.write(x)
+        return '{0}text_small_100.txt'.format(path_to_data)
 
 
 def data_preparation(
@@ -54,6 +55,6 @@ if __name__ == "__main__":
     path_to_initial_data = os.path.abspath('../../data/') + '/'
     print(path_to_initial_data)
     path_to_data = os.path.abspath('../../data/tmp/') + '/'
-    # small_sample(path_to_initial_data, path_to_data)  # код для получения небольшой выборки
-    data_preparation(path_to_initial_data,
-                     path_to_data)
+    path_to_data = small_sample(path_to_initial_data, path_to_data)  # код для получения небольшой выборки
+    # data_preparation(path_to_initial_data,
+    #                  path_to_data)

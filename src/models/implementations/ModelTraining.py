@@ -13,8 +13,7 @@ class ModelTrainer(IModel):
         self.num_collection_passes = num_collection_passes
 
     def train_model(self) -> Any:
-        print('ok')
-
+        
         batch_vectorizer = artm.BatchVectorizer(data_path=self.data_folder_path, data_format='vowpal_wabbit',
                                                 target_folder=self.data_batches_path, batch_size=self.batch_size)
 
@@ -31,7 +30,7 @@ class ModelTrainer(IModel):
 
         dictionary_sc = artm.Dictionary('dictionary')
         dictionary_sc.gather(batch_vectorizer.data_path)
-        dictionary_sc.filter(min_tf=20, max_tf=50000)
+        dictionary_sc.filter(max_tf=50000)
 
         model_artm.initialize('dictionary')
 
